@@ -1,0 +1,17 @@
+name: Hello World Test
+
+on:
+  workflow_call:
+    inputs:
+      message:
+        description: "Eine Testnachricht"
+        required: false
+        type: string
+        default: "Hallo von francora-github-actions!"
+
+jobs:
+  say-hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Nachricht ausgeben
+        run: echo "${{ inputs.message }}"
