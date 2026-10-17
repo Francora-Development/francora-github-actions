@@ -1,0 +1,31 @@
+name: Standard CI Pipeline
+
+# workflow_call macht diesen Workflow für andere Repositories aufrufbar
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        description: "Node.js Version"
+        required: false
+        type: string
+        default: "20.x"
+
+jobs:
+  build-and-test:
+    name: Build & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Code auschecken
+        uses: actions/checkout@v4
+
+      - name: Node.js einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}
+
+      - name: Abhängigkeiten installieren
+        run: npm ci
+
+      - name: Tests ausführen
+        run: npm test --if-present
